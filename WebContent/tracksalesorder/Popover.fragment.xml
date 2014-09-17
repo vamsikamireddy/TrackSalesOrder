@@ -1,0 +1,26 @@
+<!-- Created (By: Vamsi)  -->	
+
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	 >
+
+
+
+		 <Dialog
+    title="Select Date Range"  >
+    
+   
+			
+				<Label text="StartDate" />
+				<DateTimeInput id="StartDate" type="Date" placeholder=""  />
+				<Label text="EndDate" />
+				<DateTimeInput id="EndDate" type="Date" placeholder=""   />
+				<Button text="Done" press="handleDonePress"   /> 
+				<Button text="Cancel" press="handleCancelPress"  />	
+			
+		</Dialog>
+
+
+	
+</core:FragmentDefinition>

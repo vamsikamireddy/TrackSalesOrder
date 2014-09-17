@@ -1,0 +1,27 @@
+<core:View controllerName="com.sndk.poc.tracksalesorder.LineItem" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+ <Page id="page" title="{i18n>LineItemTitle}" showNavButton="true" navButtonPress="handleNavBack">
+ <content>
+ <form:SimpleForm id="SupplierForm" minWidth="1024" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1" columnsL="1" columnsM="1">
+ <form:content>
+  <core:Title text="{Status}" /> 
+  <Label text="Item No" /> 
+  <Text text="{SLine}" /> 
+  <Label text="ProductId" /> 
+  <Text text="{Material}" /> 
+  <Label text="Requested Delivery Date" /> 
+  <Text text="{path:'ReqDelDate' }" /> 
+  <Label text="Quantity" /> 
+  <Text text="{Quantity}" /> 
+  <Label text="Status" /> 
+  <Text text="{Status}" /> 
+  <Label text="Planned Ship Date" /> 
+  <Text text="{path:'PlanShipDate' }" /> 
+  <Label text="ActualShip Date" /> 
+  <Text text="{path:'ActShipDate' }" /> 
+  <Label text="Tracking No" /> 
+  <Text text="{TrackingNum}" /> 
+  </form:content>
+  </form:SimpleForm>
+  </content>
+  </Page>
+  </core:View>

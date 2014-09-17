@@ -1,0 +1,303 @@
+<?xml-stylesheet?>
+<core:View
+	controllerName="com.sndk.poc.tracksalesorder.Detail"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"	
+	xmlns:core="sap.ui.core" 	
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<html:style>     
+            
+      .myCustFont{
+	font-style: italic;
+	}
+      .MyFont{
+          font-size : 25px;
+      }  
+       
+      .onhyperlink{
+		text-decoration: underline;			
+		
+	}
+	
+	.boldStyle{
+font-weight: bold;
+}
+	
+     
+      
+</html:style>
+	<Page
+		 title="{i18n>DetailTitle}"		
+		showNavButton="{device>/isPhone}"
+		navButtonPress="handleNavButtonPress" 
+		showHeader = "true">
+		 <headerContent>
+			<Image src="sap-icon://customer"/>
+				<Text  text=""  />
+				<Text id="userName" text=""  />
+		</headerContent>
+		
+		<ObjectHeader  		 
+			icon = "{ChangedByName}"
+			title="{SOrd}"	
+					
+			number="{ElapsedDays}" 
+			 numberUnit="days">
+					
+			<attributes>
+			<ObjectAttribute class= "boldStyle" id="StatusText"  />
+				<ObjectAttribute class= "myCustFont" text="{EndCustomer}" />
+				<ObjectAttribute class= "myCustFont" text="{OrderReason}" />
+				
+
+			</attributes>
+			<firstStatus>
+						
+						<ObjectStatus class="myStatusFont"
+						text="{
+						path: 'HeaderStatus',
+						formatter:
+						'com.sndk.poc.util.Formatter.statusText'
+						}"
+						state ="{
+						path: 'HeaderStatus',
+						formatter:
+						'com.sndk.poc.util.Formatter.statusState'
+						}" />
+						
+
+				</firstStatus>
+		</ObjectHeader>	
+			
+		 
+		
+		<IconTabBar
+			id="IconTabBar"
+			expanded="{device>/isNoPhone}"			
+			 >
+				<items>				
+				<IconTabFilter
+						icon="sap-icon://addresses"
+						
+						>
+						<form:SimpleForm
+							id="SupplierForm"
+							minWidth="1024" 
+							maxContainerCols="1"
+					        editable="false"
+					        layout="ResponsiveGridLayout"
+					        title=""
+					        labelSpanL="4"
+					        labelSpanM="4"
+					        emptySpanL="1"
+					        emptySpanM="1"
+					        columnsL="1"
+					        columnsM="1">
+					         <form:content>
+					          <core:Title text="Ship to Address" />
+					          <Label text="Name" />
+					          <Text text="{/Name1}" />						          				           			         
+					          <Label text="Street 1" />
+					          <Text text="{/Street1}" />
+					          <Label text="Street 2" />
+					          <Text text="{/Street2}" />
+					          <Label text="City" />
+					          <Text text="{/City}" />
+					          <Label text="Postal Code" />
+					          <Text text="{/Zip}" />
+					          <Label text="Region" />
+					          <Text text="{/Region}" />
+					          <Label text="Country" />
+					          <Text text="{/Country}" />	
+					         
+					        </form:content>
+						</form:SimpleForm>
+					</IconTabFilter>
+					
+		     		 <IconTabFilter
+		      			  icon="sap-icon://approvals"
+		      			  id="approval"
+		      			  >
+		      			   <ScrollContainer							   
+							    horizontal="true"
+							    vertical="true" >							    
+		       			 	 <Table id="approvalHistory"
+								headerText="{i18n>LineItemTableHeader}"
+								items="{/results}"
+								rowSelectionChange="handleRowSelection"
+								>
+									<columns>
+										<Column				
+											demandPopin="true"
+											hAlign="Begin" >
+											<header><Text text="Stage" /></header>
+										</Column>
+										<Column					
+											hAlign="Center" >
+											<header><Text text="Approver Name" /></header>
+										</Column>
+										<Column
+											minScreenWidth="Desktop"
+											demandPopin="true"
+											hAlign="Center" >
+											<header><Text text="Approved Date" /></header>
+										</Column>
+										<Column
+											
+											demandPopin="true"
+											hAlign="Center" > 
+											<header><Text text="Status" /></header>
+										</Column>
+										<Column
+											minScreenWidth="Desktop"
+											demandPopin="true"
+											hAlign="Center" > 
+											<header><Text text="Pending Time(in days)" /></header>
+										</Column>
+										<Column
+											minScreenWidth="Desktop"
+											demandPopin="true"
+											hAlign="Center" > 
+											<header><Text text="Comments" /></header>
+										</Column>									
+										
+									</columns>
+									<ColumnListItem
+										type="Inactive" >
+										<cells>
+										<ObjectIdentifier
+											title="{Stage}" />		
+										<Link	 class="onhyperlink"										
+											text="{Approver}"
+											press="handleLinkPress"/>					
+															
+										<Text
+											text="{path:'RejDate',	formatter:'com.sndk.poc.util.Formatter.date'	}"/> 
+										<Text
+											text="{CurrStatus}"/>
+										<Text
+											text="{PendDays}"/>		
+										<Image
+         									 src="icons/viewcomments.png"					 
+         									 press="HandleImagePress" >
+         								</Image>							
+										</cells>
+									</ColumnListItem>
+						       </Table>
+					    </ScrollContainer>
+		      		</IconTabFilter>
+		      	 
+		      	 <IconTabFilter
+		      	 			 icon="sap-icon://sales-order-item"
+		      	 			 id="sditem"
+		      	 			  >
+							
+							 <Table id="itmtable" 
+							 		headerText="{i18n>LineItemTableSales}"
+							 		items="{/results}"
+							 		inset="false" 
+							 		>
+ 									<columns>
+										 <Column demandPopin="true" 
+										 		 hAlign="Begin">
+ 										 <header><Text text="Item No" /></header>
+  										 </Column>
+  										 
+ 										 <Column minScreenWidth="Desktop" 
+ 										 		 demandPopin="true"
+ 										 		 hAlign="Center">
+ 										 <header><Text text="Product ID" /></header>
+  									     </Column>
+  									     
+ 										<Column hAlign="Center">
+  										 <header><Text text="Status" /></header>
+ 										 </Column>
+  										 </columns>  
+  										 <ColumnListItem type="Navigation" 
+														 press="handleLineItemPress">
+									<cells>
+									  <Text text="{SLine}" /> 
+									  <Text text="{Material}" /> 
+									  <Text text="{Status}" /> 
+									  </cells>
+									  </ColumnListItem>
+									  </Table>
+									  </IconTabFilter>  	    	 		
+				<IconTabFilter
+					icon="sap-icon://warning" 
+					iconColor="Negative"
+					id="exceptionid" >
+					<Table					id="exception"
+											headerText="{i18n>LineItemTableException}"	
+															
+											>
+												<columns>
+													<Column				
+														demandPopin="true"
+														hAlign="Begin" >
+														<header><Text text="Item No" /></header>
+													</Column>
+													<Column	
+														minScreenWidth="Tablet"				
+														hAlign="Center" >
+														<header><Text text="Product ID" /></header>
+													</Column>
+													<Column					
+														hAlign="Center" >
+														<header><Text text="Requested Delivery Date" /></header>
+													</Column>
+													<Column
+														minScreenWidth="Tablet"
+														demandPopin="true"
+														hAlign="Center" >
+														<header><Text text="Quantity" /></header>
+													</Column>
+													<Column
+														minScreenWidth="Tablet"
+														demandPopin="true"
+														hAlign="Center" >
+														<header><Text text="Status" /></header>
+													</Column>
+													<Column
+														minScreenWidth="Tablet"
+														demandPopin="true"
+														hAlign="Center" >
+														<header><Text text="Planned Ship Date" /></header>
+													</Column>
+													<Column
+														minScreenWidth="Tablet"
+														demandPopin="true"
+														hAlign="Center" >
+														<header><Text text="Exception Types" /></header>
+													</Column>
+																					
+												</columns>
+												<ColumnListItem
+													
+													 >
+													<cells>
+													<ObjectIdentifier
+														title="{/SLine}" />
+													<Text
+														text="{Material}"/>
+													<Text
+														text="{path:'ReqDelDate',	formatter:'com.sndk.poc.util.Formatter.date'	}"/>										
+													<Text
+														text="{Quantity}"/>
+													<Text
+														text="{Status}"/>	
+													<Text
+														text="{path:'PlanShipDate', formatter:'com.sndk.poc.util.Formatter.date'}"/>
+													<Link	 class="onhyperlink"										
+														text="View Exceptions" press="handleViewExcPress"/>
+										
+													</cells>
+												</ColumnListItem>
+									       </Table>
+				</IconTabFilter>
+				</items>
+		</IconTabBar>
+	
+	</Page>
+</core:View>
