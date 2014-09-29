@@ -35,6 +35,30 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.App", {
 		
 	},
 	
+	toStatusItem:function(pageId,objects){
+    var app = this.getView().app;
+		
+		// load page on demand
+		var master = ("Master" === pageId);
+		if (app.getPage(pageId, master) === null) {
+			var page = sap.ui.view({
+				id : pageId,
+				viewName : "com.sndk.poc.tracksalesorder." + pageId,
+				type : "XML"
+			});
+			page.getController().nav = this;
+			app.addPage(page, master);
+			jQuery.sap.log.info("app controller > loaded page: " + pageId);
+		}
+		
+		
+		// show the page
+		app.to(pageId,objects);
+		
+		
+		
+	},
+	
 	/**
 	 * Navigates back to a previous page
 	 * @param {string} pageId The id of the next page

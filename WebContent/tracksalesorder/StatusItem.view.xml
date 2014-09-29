@@ -1,0 +1,211 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+		controllerName="com.sndk.poc.tracksalesorder.StatusItem" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>StatusItemTitle}" showNavButton="true" navButtonPress="handleNavBack">
+		<content>
+			<IconTabBar id="idSubIconTabBar" select="handleSubIconTabBarSelect">
+						<items>
+							<IconTabFilter showAll="true" count="{/totalcount}"
+								text="Sales Order Line Items" keys="All" >
+								<Table id="itmtable" headerText=""
+									items="{/results}" >
+									<columns>
+										<Column demandPopin="true" hAlign="Begin">
+											<header>
+												<Text text="Item No" />
+											</header>
+											</Column>
+
+										<Column minScreenWidth="Desktop" demandPopin="true"
+											hAlign="Center">
+											<header>
+												<Text text="Product ID" />
+											</header>
+										</Column>
+										
+										<Column hAlign="Center">
+											<header>
+												<Text text="Quantity" />
+											</header>
+										</Column>
+
+										<Column hAlign="Center">
+											<header>
+												<Text text="Status" />
+											</header>
+										</Column>
+									</columns>
+									<ColumnListItem type="Navigation" press="handleStatusLineItemPress">
+										<cells>
+											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
+											<Text text="{Material}" />
+											<Text text="{Quantity}" />
+											<Text text="{Status}" />
+										</cells>
+									</ColumnListItem>
+								</Table>
+								</IconTabFilter>
+							<IconTabSeparator />
+							
+							
+							
+							<IconTabFilter id="IdConfirmed" icon="sap-icon://sys-enter-2"
+								iconColor="Positive" count="{/Confirmed/count}"  visible="{/Confirmed/visible}" text="Confirmed" key="Confirmed">
+								<Table id="ConfirmedItemsTable" headerText="{i18n>LineItemTableSales}"
+									items="{/Confirmed/items}" inset="false">
+									<columns>
+										<Column demandPopin="true" hAlign="Begin">
+											<header>
+												<Text text="Item No" />
+											</header>
+										</Column>
+
+										<Column minScreenWidth="Desktop" demandPopin="true"
+											hAlign="Center">
+											<header>
+												<Text text="Product ID" />
+											</header>
+										</Column>
+										<Column hAlign="Center">
+											<header>
+												<Text text="Quantity" />
+											</header>
+										</Column>	
+										<Column hAlign="Center">
+											<header>
+												<Text text="ConfirmationDate" />
+											</header>
+										</Column>
+									</columns>
+									<ColumnListItem type="Navigation" press="handleStatusLineItemPress">
+										<cells>
+											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
+											<Text text="{Material}" />
+											<Text text="{Quantity}" />
+											<Text text="{PlanShipDate}" />
+										</cells>
+									</ColumnListItem>
+								</Table>
+							</IconTabFilter>
+							
+							<IconTabFilter id="IdUnconfirmed" icon="sap-icon://status-in-process"
+								iconColor="Critical" count="{/Unconfirmed/count}"  visible="{/Unconfirmed/visible}" text="Unconfirmed" key="Unconfirmed">
+								<Table id="UnconfirmedItemsTable" headerText="{i18n>LineItemTableSales}"
+									items="{/Unconfirmed/items}" inset="false">
+									<columns>
+										<Column demandPopin="true" hAlign="Begin">
+											<header>
+												<Text text="Item No" />
+											</header>
+										</Column>
+
+										<Column minScreenWidth="Desktop" demandPopin="true"
+											hAlign="Center">
+											<header>
+												<Text text="Product ID" />
+											</header>
+										</Column>
+										<Column hAlign="Center">
+											<header>
+												<Text text="Quantity" />
+											</header>
+										</Column>
+
+										<Column hAlign="Center">
+											<header>
+												<Text text="RequestedDate" />
+											</header>
+										</Column>
+									</columns>
+									<ColumnListItem type="Navigation" press="handleStatusLineItemPress">
+										<cells>
+											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
+											<Text text="{Material}" />
+											<Text text="{Quantity}" />
+											<Text text="{ReqDelDate}" />
+										</cells>
+									</ColumnListItem>
+								</Table>
+							</IconTabFilter>
+							<IconTabFilter id="IdShipped" icon="sap-icon://shipping-status"
+								iconColor="Positive" count="{/Shipped/count}"  visible="{/Shipped/visible}" text="Shipped" key="Shipped">
+								<Table id="ShippedItmTable" headerText="{i18n>LineItemTableSales}"
+									items="{/Shipped/items}" inset="false">
+									<columns>
+										<Column demandPopin="true" hAlign="Begin">
+											<header>
+												<Text text="Item No" />
+											</header>
+										</Column>
+
+										<Column minScreenWidth="Desktop" demandPopin="true"
+											hAlign="Center">
+											<header>
+												<Text text="Product ID" />
+											</header>
+										</Column>
+										<Column hAlign="Center">
+											<header>
+												<Text text="Quantity" />
+											</header>
+										</Column>
+										<Column hAlign="Center">
+											<header>
+												<Text text="Tracking No" />
+											</header>
+										</Column>
+									</columns>
+									<ColumnListItem type="Navigation" press="handleStatusLineItemPress">
+										<cells>
+											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
+											<Text text="{Material}" />
+											<Text text="{Quantity}" />
+											<Text text="{TrackingNum}" />
+										</cells>
+									</ColumnListItem>
+								</Table>
+							</IconTabFilter>
+							
+							<IconTabFilter id="IdRejected" icon="sap-icon://sys-cancel-2"
+								iconColor="Negative" count="{/Rejected/count}" visible="{/Rejected/visible}" text="Rejected" key="Rejected">
+								<Table id="RejectedItemsTable" headerText="{i18n>LineItemTableSales}"
+									items="{/Rejected/items}"  inset="false">
+									<columns>
+										<Column demandPopin="true" hAlign="Begin">
+											<header>
+												<Text text="Item No" />
+											</header>
+										</Column>
+
+										<Column minScreenWidth="Desktop" demandPopin="true"
+											hAlign="Center">
+											<header>
+												<Text text="Product ID" />
+											</header>
+										</Column>
+										<Column hAlign="Center">
+											<header>
+												<Text text="Quantity" />
+											</header>
+										</Column>	
+										<Column hAlign="Center">
+											<header>
+												<Text text="Status" />
+											</header>
+										</Column>
+									</columns>
+									<ColumnListItem type="Navigation" press="handleLineItemPress">
+										<cells>
+											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
+											<Text text="{Material}" />
+											<Text text="{Quantity}" />
+											<Text text="{Status}" />
+										</cells>
+									</ColumnListItem>
+								</Table>
+							</IconTabFilter>
+						</items>
+					</IconTabBar>
+			
+		</content>
+	</Page>
+</core:View>

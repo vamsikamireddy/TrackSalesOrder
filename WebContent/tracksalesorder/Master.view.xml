@@ -15,6 +15,20 @@
 		text-overflow: ellipsis;
 		width: 100%;
      }
+     
+     .sapMObjLAttrRow:nth-child(1)>.sapMObjLAttrDiv .sapMObjectAttributeDiv,
+
+.sapMObjLAttrRow:nth-child(2)>.sapMObjLAttrDiv .sapMObjectAttributeDiv{
+
+       white-space: normal;
+
+       overflow: hidden;
+
+       text-overflow: ellipsis;
+
+       width: 100%;
+
+}
 	.myStatusFont{
 	font-size: 0.9rem;
 	}
@@ -37,6 +51,7 @@
 				<contentLeft>
 					<SearchField
 						search="handleSearch"
+						liveChange ="handleLiveChange"
 						>
 					</SearchField>
 				</contentLeft>	

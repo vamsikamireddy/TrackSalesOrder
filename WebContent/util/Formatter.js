@@ -6,9 +6,17 @@ com.sndk.poc.util.Formatter = {
 	
 	_statusStateMap : {
 		"Requestor Approved" : "Success",
+		"Requestor Rejected" : "Error",
+		"Requestor Returned" : "Warning",
 		"Fully Confirmed" : "Success",
 		"Sample Released" : "Success",
 		"Business Manager Approved" : "Success",
+		"Business Manager Rejected" : "Error",
+		"Business Manager Returned" : "Warning",
+		"Paying Org. Approved" : "Success",
+		"Paying Org. Rejected" : "Error",
+		"Paying Org. Returned" : "Warning",
+		"Partially Rejected in ECC" : "Error",
 		"Fully Shipped" : "Success",
 		"Hold for Approval" : "Warning",
 		"Submitted for Approval" : "Warning",
@@ -16,7 +24,8 @@ com.sndk.poc.util.Formatter = {
 		"Partially Shipped" : "Warning",
 		"Sample Rejected" : "Error",
 		"Not Submitted" : "Error",
-		"Cancelled" : "Error"
+		"Cancelled" : "Error",
+		"Fully Rejected in ECC" : "Error"
 		
 			},
 
@@ -70,6 +79,10 @@ com.sndk.poc.util.Formatter = {
 //		} else {
 //			return value;
 //		}
+	},
+	
+	trail : function(value){
+		return parseInt(value);
 	},
 	
 

@@ -1,37 +1,74 @@
 sap.ui.controller("com.sndk.poc.tracksalesorder.Empty", {
 
-/**
-* Called when a controller is instantiated and its View controls (if available) are already created.
-* Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-* @memberOf view.Popover
-*/
-//	onInit: function() {
-//
-//	},
+onBeforeRendering:function(){
+	var obj = this;
+	var nameModel = new  sap.ui.model.json.JSONModel();
+	var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+	var oDataModel = new sap.ui.model.odata.ODataModel(url);
+	if(oDataModel!=null){
+		var nquery = "GetName('X')" ;
+		oDataModel.read(nquery,null,[],true,
+		function(data){
+			nameModel.setData(data);
+			sap.ui.getCore().setModel(nameModel, "nameModel");
+			
+			obj.byId("header").setModel(nameModel);
+		},
+		function(err){
+			var msg =  err.response.statusText;
+			sap.m.MessageBox.show( 
+				     msg,
+				      sap.m.MessageBox.Icon.ERROR,
+				      err.message,
+				      [sap.m.MessageBox.Action.OK],
+				      function() { / * do something * / }
+					 );
+			
+		}
+		);
+	}
+},
 
-/**
-* Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-* (NOT before the first rendering! onInit() is used for that one!).
-* @memberOf view.Popover
-*/
-//	onBeforeRendering: function() {
-//	},
+onClick : function(evt){
+	
+//	  if (! this._oPopover) {
+//	      this._oPopover = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LogPopover",this);
+//	    }
+//	  this._oPopover.openBy(evt.getSource());
+	var oButton = evt.getSource();
+	   if (!this._actionSheet) {
+		      this._actionSheet = sap.ui.xmlfragment(
+		        "com.sndk.poc.tracksalesorder.LogPopover",
+		        this
+		      );
+		     // this.getView().addDependent(this._actionSheet);
+		    }
 
-/**
-* Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-* This hook is the same one that SAPUI5 controls get after being rendered.
-* @memberOf view.Popover
-*/
-//	onAfterRendering: function() {
-//
-//	},
+		    this._actionSheet.openBy(oButton);
+},
 
-/**
-* Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-* @memberOf view.Popover
-*/
-//	onExit: function() {
-//
-//	}
+
+handleLogoutButton : function(oEvent) {
+	 
+	  this._actionSheet.close();
+	  $.ajax({ 
+	  type: "GET", 
+
+	  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
+
+	  }).done(function(data){ //Now clear the authentication header stored in the browser 
+		  
+		  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
+	  
+		  if (!document.execCommand("ClearAuthenticationCache")) { 
+
+	  //"ClearAuthenticationCache" will work only for IE. Below code for other browsers 
+
+	
+
+	  } 
+
+	  }) 
+}
 
 });

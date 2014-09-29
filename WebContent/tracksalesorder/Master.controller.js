@@ -66,6 +66,8 @@ sap.ui
 					{
 					this._filterDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.FilterDialog",this);
 						}
+			var filterModel = sap.ui.getCore().getModel("filterModel");
+			this._filterDialog.setModel(filterModel)
 						this._filterDialog.open();
 					},
 
@@ -86,28 +88,36 @@ sap.ui
 
 
 						var aFilters = [];
-						if(sap.ui.getCore().byId("switch").getState()){
-							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "X");
-						}else{
-							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "");
-						}
-						aFilters.push(oFilter);
+//						if(sap.ui.getCore().byId("switch").getState()){
+//							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "X");
+//						}else{
+//							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "");
+//						}
+//						aFilters.push(oFilter);
 
 					jQuery.each(mParams.filterItems, function (i, oItem) {
 						
 						key = oItem.getKey();
 						
 						path = oItem.oParent.mProperties.key;
-						if(path == "HeaderStatus" ){
-						var oFilter = new sap.ui.model.Filter(path, sap.ui.model.FilterOperator.Contains, key);
-						aFilters.push(oFilter);
+						if(path == "ExcepFlg"){
+							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, key);
+							aFilters.push(oFilter)
+						}else{
+							var oFilter = new sap.ui.model.Filter(path, sap.ui.model.FilterOperator.Contains, key);
+							aFilters.push(oFilter);
 						}
+						
+//						if(path == "HeaderStatus"  || path == "ApproverName"){
+//						var oFilter = new sap.ui.model.Filter(path, sap.ui.model.FilterOperator.Contains, key);
+//						aFilters.push(oFilter);
+//						}
 						});
 					
 
 						var list = this.getView().byId("list"); 
 						var binding = list.getBinding("items").filter(aFilters);
-
+						//this.nav.to("Empty");
 
 
 						},
@@ -118,23 +128,56 @@ sap.ui
 							var sorter = new sap.ui.model.Sorter(params.sortItem.mProperties.key, params.sortDescending);
 							var list = this.getView().byId("list"); 
 							list.getBinding("items").sort(sorter); 
+							//this.nav.to("Empty");
 							},
 
 
 
 				handleSearch : function(evt) {
-						// create model filter
 						var filters = [];
-						var query = evt.getParameter("query");
-						if (query && query.length > 0) {
-							var filter = new sap.ui.model.Filter("EndCustomer",
-									sap.ui.model.FilterOperator.Contains, query);
-							filters.push(filter);
-						}
+						var query = evt.getParameter("query");		
 
+						// update list binding
+						var list = this.getView().byId("list");		
+						var binding = list.getBinding("items");
+						
+						
+						binding.filter(
+								!query? [] :[
+								             new sap.ui.model.Filter(
+								            		 [
+								            		  new sap.ui.model.Filter("EndCustomer",sap.ui.model.FilterOperator.Contains, query),
+								            		  new sap.ui.model.Filter("SOrd",sap.ui.model.FilterOperator.Contains, query)
+								            		  
+								            		  ]
+								            		  )
+								             ]
+								);
+					},
+					
+					handleLiveChange:function(evt){
+						var filters = [];
+						var query = evt.getParameter("newValue");
+						
 						var list = this.getView().byId("list");
 						var binding = list.getBinding("items");
-						binding.filter(filters);
+					
+						
+						binding.filter(
+								!query? [] :[
+								             new sap.ui.model.Filter(
+								            		 [
+								            		  new sap.ui.model.Filter("EndCustomer",sap.ui.model.FilterOperator.Contains, query),
+								            		  new sap.ui.model.Filter("SOrd",sap.ui.model.FilterOperator.Contains, query)
+								            		  
+								            		  ]
+								            		  )
+								             ]
+								);
+						
+						
+						
+						
 					},
 
 
@@ -247,7 +290,7 @@ sap.ui
 						obj.getView().byId("list").removeSelections();
 
 						_BusyDialog.close(); 
-						obj.nav.to("Empty");
+						//obj.nav.to("Empty");
 						 
 						dataModel.setData(data);
 						sap.ui.getCore().setModel(dataModel,"myModel");
@@ -258,9 +301,9 @@ sap.ui
 						_BusyDialog.close(); 
 						 
 						sap.m.MessageBox.show(
-						err.response.statusText,
+						"Unable to fetch data from server",
 						     sap.m.MessageBox.Icon.ERROR,
-						     err.message,
+						     "Error",
 						     [sap.m.MessageBox.Action.OK],
 						     function() { / * do something * / }
 						);
@@ -280,29 +323,44 @@ sap.ui
 					},
 
 					onBeforeRendering : function() {
-						var currentdate = new Date();
-						var d = new Date();
-						var t = (d.getMonth() - 3) + 1;
+						var busyDialog;
+						if (!this._BusyDialog) {
+							this._BusyDialog = new sap.m.BusyDialog("BusyIndicator",   
+			                {  
+			                    showCancelButton :false,  
+			                    title : "Please Wait..",  
+			                    text : "Loading"
+			                    
+			                }); 
+						}
+						
+						busyDialog = this._BusyDialog;
+						
+						this._BusyDialog.open();
+						var currentdate = new Date(); 		
+						var todate = currentdate.getFullYear() + "-"  
+										      + (currentdate.getMonth()+1) + "-"	
+										      + currentdate.getDate() + "T00:00:00";
 
-						var priorDate = currentdate.getFullYear() + "-" + t
-								+ "-" + currentdate.getDate();
-																
+						
+				//get the date and time prior to three months from today
+						var d = new Date(); 
+						var t = (d.getMonth()-1)+1; 
+						
+						var fromdate = currentdate.getFullYear() + "-"  
+						 + t + "-"	
+						 + currentdate.getDate() + "T00:00:00";
 
-						var fromdate = new Date(priorDate);
-
-						var dateFormat = sap.ui.core.format.DateFormat
-								.getDateInstance({
-									pattern : "yyyy-MM-dd"
-								});
-						todate = dateFormat.format(currentdate) + "T00:00:00";
-						fromdate = dateFormat.format(fromdate) + "T00:00:00";
-
+						
 
 
 						var detailModel = sap.ui.getCore().getModel("myModel");
 						var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
 
 						var obj = this;
+						var statusList = [];
+						 var pendingWith = [] ;
+							
 
 						oDataModel = new sap.ui.model.odata.ODataModel(url);
 
@@ -312,15 +370,59 @@ sap.ui
 									+ "' and ToDate eq datetime'"
 									+ todate + "'";
 
-							oDataModel.read(query, null, [], true, function(
-									data) {
-								detailModel.setData(data);
-								sap.ui.getCore().setModel(detailModel,"myModel");
+							oDataModel.read(query, null, [], true, function(data) {
+									busyDialog.close();
+									detailModel.setData(data);
+									sap.ui.getCore().setModel(detailModel,"myModel");
+									var model = sap.ui.getCore().getModel("myModel");
+									var objects = model.getProperty("/results");
+									var jsonModel = new sap.ui.model.json.JSONModel();
+									
+									if(objects instanceof Array){
+										for(var i=0;i<objects.length;i++){
+											
+												if(statusList.length === 0 && !(objects[i].HeaderStatus == "") ){
+													statusList.push({"HeaderStatus":objects[i].HeaderStatus});
+												}
+												if(pendingWith.length ===0 && !(objects[i].ApproverName == "") ){
+													pendingWith.push({"ApproverName":objects[i].ApproverName});
+												}
+												
+												
+												
+											
+											if(!findDuplicate(statusList, objects[i],"HeaderStatus") && objects[i].HeaderStatus != "")
+												{
+												statusList.push({"HeaderStatus":objects[i].HeaderStatus});
+												}
+											
+											if(!findDuplicate(pendingWith, objects[i],"ApproverName") && !(objects[i].ApproverName == "") )
+											{
+												pendingWith.push({"ApproverName":objects[i].ApproverName});
+											}
+											
+											
+											
+											
+										}
+											
+									jsonModel.setData({
+											"Status" : statusList,
+											"PendingWith" : pendingWith,
+										});
+										sap.ui.getCore().setModel(jsonModel,"filterModel");
+									}
+									
+									
 
-								var result = detailModel.getProperty("/results");
+
+
+
+
+								
 							}, function(err) {
-								alert("Failure");
-								sap.m.MessageBox.show("Failed to connect",
+								busyDialog.close();
+								sap.m.MessageBox.show("Unable to fetch data from server",
 										sap.m.MessageBox.Icon.ERROR, "Error",
 										[ sap.m.MessageBox.Action.OK ],
 										function() {
@@ -334,3 +436,17 @@ sap.ui
 					}
 
 				});
+function findDuplicate(arrayOfObjects,objectToFind, fieldToCheck )
+{ 
+	var isDuplicate = false;
+	for(var j=0;j<arrayOfObjects.length;j++){
+		if( arrayOfObjects[j][fieldToCheck] == objectToFind[fieldToCheck])  
+		{
+				isDuplicate = true;
+				break;
+				
+			}
+		
+	 }
+	return isDuplicate;
+}

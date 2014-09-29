@@ -5,7 +5,7 @@
  <form:content>
   <core:Title text="{Status}" /> 
   <Label text="Item No" /> 
-  <Text text="{SLine}" /> 
+ <Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
   <Label text="ProductId" /> 
   <Text text="{Material}" /> 
   <Label text="Requested Delivery Date" /> 
@@ -16,10 +16,10 @@
   <Text text="{Status}" /> 
   <Label text="Planned Ship Date" /> 
   <Text text="{path:'PlanShipDate' }" /> 
-  <Label text="ActualShip Date" /> 
-  <Text text="{path:'ActShipDate' }" /> 
-  <Label text="Tracking No" /> 
-  <Text text="{TrackingNum}" /> 
+  <Label id="shipDate" text="ActualShip Date" /> 
+  <Text id="shipDateTxt" text="{path:'ActShipDate' }" /> 
+  <Label id="trackingNo" text="Tracking No" /> 
+  <Text id="trackingNoTxt" text="{TrackingNum}" /> 
   </form:content>
   </form:SimpleForm>
   </content>

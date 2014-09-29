@@ -24,8 +24,18 @@ sap.ui.jsview("com.sndk.poc.tracksalesorder.App", {
 		
 		// load the detail page
 		var detail = sap.ui.xmlview("Detail", "com.sndk.poc.tracksalesorder.Detail");
+		detail.app = this.app;
 		detail.getController().nav = this.getController();
 		this.app.addPage(detail, false);
+		
+		var statusItem = sap.ui.xmlview("StatusItem", "com.sndk.poc.tracksalesorder.StatusItem");
+		statusItem.app = this.app;
+		statusItem.getController().nav = this.getController();
+		this.app.addPage(statusItem, false);
+		
+		var lineItem = sap.ui.xmlview("LineItem", "com.sndk.poc.tracksalesorder.LineItem");
+		lineItem.getController().nav = this.getController();
+		this.app.addPage(lineItem, false);
 		
 		// done
 		return this.app;

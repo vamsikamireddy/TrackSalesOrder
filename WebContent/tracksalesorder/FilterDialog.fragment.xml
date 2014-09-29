@@ -4,26 +4,33 @@
     <ViewSettingsDialog
     confirm="handleFilter">
   
-    <filterItems>
-      <ViewSettingsFilterItem text="Status" key="HeaderStatus">
-        <items>
-          <ViewSettingsItem text="Sample Rejected" key="Sample Rejected" />
-          <ViewSettingsItem text="Fully Confirmed" key="Fully Confirmed" />
-          <ViewSettingsItem text="Requestor Approved" key="Requestor Approved" />
-           <ViewSettingsItem text="Submitted for Approval" key="Submitted for Approval" />
-           <ViewSettingsItem text="Cancelled" key="Cancelled" />
-          <ViewSettingsItem text="Hold for Approval" key="Hold for Approval" />
-          <ViewSettingsItem text="Not Submitted" key="Not Submitted" />
-           <ViewSettingsItem text="Partially Shipped" key="Partially Shipped" />
-            <ViewSettingsItem text="Sample Released" key="Sample Released" />
-          <ViewSettingsItem text="Business Manager Approved" key="Business Manager Approved" />
-          <ViewSettingsItem text="Fully Shipped" key="Fully Shipped" />
-           <ViewSettingsItem text="Partially Confirmed" key="Partially Confirmed" />
-           
-        </items>
-      </ViewSettingsFilterItem>
+    <filterItems 
+    		 >
+      <ViewSettingsFilterItem text="Status" key="HeaderStatus" items="{path: '/Status'}">
+<items>
+
+   <ViewSettingsItem text="{HeaderStatus}" key="{HeaderStatus}" />
+   
+   
+
+</items>
+</ViewSettingsFilterItem>
+ <ViewSettingsFilterItem text="PendingWith" key="ApproverName" items="{path: '/PendingWith'}">
+<items>
+
+   <ViewSettingsItem text="{ApproverName}" key="{ApproverName}" />
+   </items>
+   </ViewSettingsFilterItem>
+   
+    <ViewSettingsFilterItem text="Exception" key="ExcepFlg" >
+<items>
+
+   <ViewSettingsItem text="With Exception" key="X" />
+   <ViewSettingsItem text="Without Exception" key="" />
+   </items>
+   </ViewSettingsFilterItem>
       
-      <ViewSettingsCustomItem text="Exception" key="ExcepFlg">
+     <!--  <ViewSettingsCustomItem text="Exception" key="ExcepFlg">
 <customControl>
 <List id="switchList" headerText="">
 <InputListItem label="State">
@@ -31,7 +38,7 @@
 </InputListItem>
 </List>
 </customControl>
-</ViewSettingsCustomItem>  
+</ViewSettingsCustomItem>   -->
     </filterItems>
   </ViewSettingsDialog>
 </core:FragmentDefinition>
