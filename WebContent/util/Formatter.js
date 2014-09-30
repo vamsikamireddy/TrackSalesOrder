@@ -3,7 +3,7 @@ jQuery.sap.declare("com.sndk.poc.util.Formatter");
 jQuery.sap.require("sap.ui.core.format.DateFormat");
 
 com.sndk.poc.util.Formatter = {
-	
+
 	_statusStateMap : {
 		"Requestor Approved" : "Success",
 		"Requestor Rejected" : "Error",
@@ -26,65 +26,52 @@ com.sndk.poc.util.Formatter = {
 		"Not Submitted" : "Error",
 		"Cancelled" : "Error",
 		"Fully Rejected in ECC" : "Error"
-		
-			},
 
-	statusText :  function (value) {
+	},
+
+	statusText : function(value) {
 		var bundle = this.getModel("i18n").getResourceBundle();
-		if(value != null){
-		return bundle.getText(value, "?");
-		}else{
+		if (value != null) {
+			return bundle.getText(value, "?");
+		} else {
 			return;
 		}
-	}, 
-	
-	statusState :  function (value) {
+	},
+
+	statusState : function(value) {
 		var map = com.sndk.poc.util.Formatter._statusStateMap;
 		return (value && map[value]) ? map[value] : "None";
 	},
-	
-	Iconchange : function (value) {
-		if(value== "X"){
-		return "icons/Order.png" ;
-		}
-		else{
-		return "icons/Request.png " ;	
+
+	Iconchange : function(value) {
+		if (value == "X") {
+			return "icons/Order.png";
+		} else {
+			return "icons/Request.png ";
 		}
 	},
-	
-	
-	Iconexception : function (value) {
-		if(value== "X"){
-		return "icons/exception.png" ;
+
+	Iconexception : function(value) {
+		if (value == "X") {
+			return "icons/exception.png";
+		} else {
+			return " ";
 		}
-		else{
-		return " " ;
-		}
-		},
-	
-	date : function (value) {
+	},
+
+	date : function(value) {
 		var dateVal;
-		if(value != null && value.indexOf(" ") != -1){
+		if (value != null && value.indexOf(" ") != -1) {
 			value = value.split(" ");
 			dateVal = value[0];
 			return dateVal;
-		}else
+		} else {
 			return value;
-		
-
-//		if (dateVal) {
-//			var oDateFormat = sap.ui.core.format.DateFormat.getDateTimeInstance({pattern: "dd-MM-yyyy"}); 
-//			var result = oDateFormat.format(new Date(dateVal));
-//			return oDateFormat.format(new Date(dateVal));
-//		} else {
-//			return value;
-//		}
+		}
 	},
-	
-	trail : function(value){
+
+	trail : function(value) {
 		return parseInt(value);
 	},
-	
 
-	
 };

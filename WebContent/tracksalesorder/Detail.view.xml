@@ -7,19 +7,14 @@
 		.myCustFont{
 		font-style: italic;
 		}
-		.MyFont{
-		font-size : 5px;
-		}
+		
 	
 		.onhyperlink{
 		text-decoration: underline;
 
 		}
 
-		.boldStyle{
-		font-weight: bold;
-		}
-
+		
 	.sapMOHNumber{
           font-size : 20px;
       }
@@ -34,42 +29,14 @@
 		<ObjectHeader id = "statusText"   title="{SOrd}">
 
 			<attributes>
-				
-				
 				<ObjectAttribute class="myCustFont" text="{OrderReason}" />
-					
-				<!--  <ObjectAttribute id="soldtoparty" class= "myCustFont"  />-->
-				<!--  <ObjectAttribute id = "createdBy" class= "myCustFont"  />-->
 				<ObjectAttribute id = "onBehalf" class= "myCustFont" />
 				<ObjectAttribute id = "payingOrg" class= "myCustFont"  />
 				<ObjectAttribute id = "pendingwith" class= "myCustFont"  />
 				<ObjectAttribute id = "daysin" class= "myCustFont"  />
 
 			</attributes>
-			<!--  <statuses>
-				
-				<ObjectStatus id = "onBehalf" class= "myCustFont" />
-				<ObjectStatus id = "payingOrg" class= "myCustFont"  />
-				<ObjectStatus id = "pendingwith" class= "myCustFont"  />
-				<ObjectStatus id = "daysin" class= "myCustFont"  />
-				</statuses>-->
-			
-			<!--  <firstStatus>
-
-				<ObjectStatus class="myStatusFont"
-					text="{
-						path: 'HeaderStatus',
-						formatter:
-						'com.sndk.poc.util.Formatter.statusText'
-						}"
-					state="{
-						path: 'HeaderStatus',
-						formatter:
-						'com.sndk.poc.util.Formatter.statusState'
-						}" />
-
-
-			</firstStatus>-->
+		
 		</ObjectHeader>
 
 
@@ -116,33 +83,7 @@
 						</form:content>
 						
 					</form:SimpleForm>
-					
-					<!--  <form:SimpleForm id="SoldToForm" minWidth="1024"
-						maxContainerCols="1" editable="false" layout="ResponsiveGridLayout"
-						title="" labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
-						columnsL="1" columnsM="1">
-						<form:content>
-							<core:Title text="Sold to Address" />
-							<Label text="Name" />
-							<Text text="{/Name1}" />
-							<Label text="Street 1" />
-							<Text text="{/Street1}" />
-							<Label text="Street 2" />
-							<Text text="{/Street2}" />
-							<Label text="City" />
-							<Text text="{/City}" />
-							<Label text="Postal Code" />
-							<Text text="{/Zip}" />
-							<Label text="Region" />
-							<Text text="{/Region}" />
-							<Label text="Country" />
-							<Text text="{/Country}" />
-
-						</form:content>
-						
-					</form:SimpleForm>-->
-					
-				</IconTabFilter>
+			</IconTabFilter>
 
 				<IconTabFilter icon="sap-icon://approvals" id="approval">
 					<ScrollContainer horizontal="true" vertical="true">
@@ -154,18 +95,18 @@
 										<Text text="Stage" />
 									</header>
 								</Column>
-								<Column hAlign="Center">
+								<Column hAlign="Center" demandPopin="true" minScreenWidth="Desktop">
 									<header>
-										<Text text="Approver Name" />
+										<Text text="Person" />
 									</header>
 								</Column>
-								<Column minScreenWidth="Desktop" demandPopin="true"
+								<Column  demandPopin="true"
 									hAlign="Center">
 									<header>
-										<Text text="Approved Date" />
+										<Text text="Date" />
 									</header>
 								</Column>
-								<Column demandPopin="true" hAlign="Center">
+								<Column demandPopin="true" hAlign="Center"  >
 									<header>
 										<Text text="Status" />
 									</header>
@@ -173,7 +114,7 @@
 								<Column minScreenWidth="Desktop" demandPopin="true"
 									hAlign="Center">
 									<header>
-										<Text text="Pending Time(in days)" />
+										<Text text="Elapsed Time(in days)" />
 									</header>
 								</Column>
 								<Column minScreenWidth="Desktop" demandPopin="true"
@@ -188,7 +129,7 @@
 								<cells>
 									<ObjectIdentifier title="{Stage}" />
 									<Link class="onhyperlink" text="{Approver}" press="handleLinkPress" />
-
+									
 									<Text
 										text="{path:'RejDate',	formatter:'com.sndk.poc.util.Formatter.date'	}" />
 									<Text text="{CurrStatus}" />

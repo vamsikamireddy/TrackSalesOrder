@@ -31,21 +31,20 @@ onBeforeRendering:function(){
 
 onClick : function(evt){
 	
-//	  if (! this._oPopover) {
-//	      this._oPopover = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LogPopover",this);
-//	    }
-//	  this._oPopover.openBy(evt.getSource());
 	var oButton = evt.getSource();
 	   if (!this._actionSheet) {
 		      this._actionSheet = sap.ui.xmlfragment(
 		        "com.sndk.poc.tracksalesorder.LogPopover",
 		        this
 		      );
-		     // this.getView().addDependent(this._actionSheet);
+
 		    }
 
 		    this._actionSheet.openBy(oButton);
 },
+
+
+
 
 
 handleLogoutButton : function(oEvent) {
@@ -61,14 +60,9 @@ handleLogoutButton : function(oEvent) {
 		  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
 	  
 		  if (!document.execCommand("ClearAuthenticationCache")) { 
+		  } 
 
-	  //"ClearAuthenticationCache" will work only for IE. Below code for other browsers 
-
-	
-
-	  } 
-
-	  }) 
+	  }) ;
 }
 
 });

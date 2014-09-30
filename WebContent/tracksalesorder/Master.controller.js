@@ -61,75 +61,56 @@ sap.ui
 					},
 
 
-		handleFilterBy : function(evt) {
-			if (!this._filterDialog)
-					{
-					this._filterDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.FilterDialog",this);
+					handleFilterBy : function(evt) {
+						if (!this._filterDialog) {
+							this._filterDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.FilterDialog",this);
 						}
-			var filterModel = sap.ui.getCore().getModel("filterModel");
-			this._filterDialog.setModel(filterModel)
+						var filterModel = sap.ui.getCore().getModel("filterModel");
+						this._filterDialog.setModel(filterModel);
 						this._filterDialog.open();
 					},
 
-		handleSortBy : function(evt) {
-			 	if (!this._sortDialog)
-			 		{
-					  this._sortDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.SortByDialog",this);
+					handleSortBy : function(evt) {
+						if (!this._sortDialog) {
+							this._sortDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.SortByDialog",this);
 						}
 						this._sortDialog.open();
 					},
 					
-		handleFilter : function(evt){
+
+					handleFilter : function(evt) {
 						var mParams = evt.getParameters();
 						var path;
 						var key;
 						var oFilter;
-					 
-
 
 						var aFilters = [];
-//						if(sap.ui.getCore().byId("switch").getState()){
-//							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "X");
-//						}else{
-//							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, "");
-//						}
-//						aFilters.push(oFilter);
+						jQuery.each(mParams.filterItems, function(i, oItem) {
 
-					jQuery.each(mParams.filterItems, function (i, oItem) {
-						
-						key = oItem.getKey();
-						
-						path = oItem.oParent.mProperties.key;
-						if(path == "ExcepFlg"){
-							oFilter = new sap.ui.model.Filter("ExcepFlg", sap.ui.model.FilterOperator.EQ, key);
-							aFilters.push(oFilter)
-						}else{
-							var oFilter = new sap.ui.model.Filter(path, sap.ui.model.FilterOperator.Contains, key);
-							aFilters.push(oFilter);
-						}
-						
-//						if(path == "HeaderStatus"  || path == "ApproverName"){
-//						var oFilter = new sap.ui.model.Filter(path, sap.ui.model.FilterOperator.Contains, key);
-//						aFilters.push(oFilter);
-//						}
+							key = oItem.getKey();
+
+							path = oItem.oParent.mProperties.key;
+							if (path == "ExcepFlg") {
+								oFilter = new sap.ui.model.Filter("ExcepFlg",
+										sap.ui.model.FilterOperator.EQ, key);
+								aFilters.push(oFilter)
+							} else {
+								var oFilter = new sap.ui.model.Filter(path,
+										sap.ui.model.FilterOperator.Contains,
+										key);
+								aFilters.push(oFilter);
+							}
 						});
-					
-
-						var list = this.getView().byId("list"); 
+						var list = this.getView().byId("list");
 						var binding = list.getBinding("items").filter(aFilters);
-						//this.nav.to("Empty");
+					},
 
-
-						},
-						
-						
-						handleSorting : function(evt){
+					handleSorting : function(evt){
 							var params = evt.getParameters();
 							var sorter = new sap.ui.model.Sorter(params.sortItem.mProperties.key, params.sortDescending);
 							var list = this.getView().byId("list"); 
 							list.getBinding("items").sort(sorter); 
-							//this.nav.to("Empty");
-							},
+					},
 
 
 
@@ -182,23 +163,15 @@ sap.ui
 
 
 					handlePopoverPress : function(oEvent) {
-
-
 						if (!this._oDialog) {
 						this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.Popover", this);
 						}
-
-
-
-
 						sap.ui.getCore().byId("EndDate").setValue("");
 						sap.ui.getCore().byId("StartDate").setValue("");
 						this._oDialog.open();
-
-
 						},
 						  
-						  handleDonePress: function (oEvent) {
+					handleDonePress: function (oEvent) {
 						 var mm , dd;
 						 var _BusyDialog;
 						 var obj = this;
@@ -287,13 +260,10 @@ sap.ui
 						oDataModel.read(query, null, [], true, 
 						function(data)
 						{
-						obj.getView().byId("list").removeSelections();
-
-						_BusyDialog.close(); 
-						//obj.nav.to("Empty");
-						 
-						dataModel.setData(data);
-						sap.ui.getCore().setModel(dataModel,"myModel");
+							obj.getView().byId("list").removeSelections();
+							_BusyDialog.close(); 
+							dataModel.setData(data);
+							sap.ui.getCore().setModel(dataModel,"myModel");
 						 
 						},
 						function(err)

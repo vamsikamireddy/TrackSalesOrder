@@ -9,7 +9,6 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 	},
 	
 	onBeforeRendering: function(evt) {
-//		alert("StatusItem : onBeforeRendering");
 		var keyModel = sap.ui.getCore().getModel("keyModel");
 		var key = keyModel.getProperty("/key");
 		
@@ -18,11 +17,11 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 		var itemModel = sap.ui.getCore().getModel("sdModel");
 		this.byId("itmtable").setModel(itemModel);
 		this.byId("idSubIconTabBar").setSelectedKey(key);
+		this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
 	
 	},
 	
 	handleStatusIconPress:function(evt){
-		//alert("StatusItem : Press");
 		var keyModel = sap.ui.getCore().getModel("keyModel");
 		var key = keyModel.getProperty("/key");
 		
@@ -35,6 +34,7 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 		}else {
 			this.byId("idSubIconTabBar").setSelectedKey(key);
 		}
+		this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
 	},
 	
 	handleStatusLineItemPress:function(evt){
@@ -65,35 +65,42 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 		this.nav.to("StatusLineItem", context);
 	},
 	
-	
-//	handleLineItemPress : function(evt) {
-//		var context = evt.getSource().getBindingContext();
-//		var app = this.getView().app;
-//		if (app)
-//			var page = app.getPage("StatusLineItem");
-//		if (page) {
-//			page.oController.handleItemPress(evt);
-//		}
-//		this.nav.to("StatusLineItem", context);
-//
-//	},
-	handleSubIconTabBarSelect:function(evt){
-		 
-
-		/*var context = evt.getSource().getBindingContext().sPath;
-		var s = evt.getParameters().selectedItem, a = "T";
-		var key = s.mProperties.key;
-		var lineItemFilter = new sap.ui.model.Filter("Status",
-				sap.ui.model.FilterOperator.EQ, key);
-		if (key == "Shipped") {
-			this.byId("ShippedItmTable").getBinding("items").filter(
-					lineItemFilter);
-		} else if (key == "Confirmed") {
-			this.byId("ConfirmedItemsTable").getBinding("items").filter(
-					lineItemFilter);
-		}*/
-		   
+	onClick : function(evt){
 		
+		var oButton = evt.getSource();
+		if (!this._actionSheet) {
+			      this._actionSheet = sap.ui.xmlfragment(
+			        "com.sndk.poc.tracksalesorder.LogPopover",
+			        this
+			      );
+			      
+			    }
+
+			this._actionSheet.openBy(oButton);
+	  },
+
+	  handleLogoutButton : function(oEvent) {
+			 
+		  this._actionSheet.close();
+		  $.ajax({ 
+		  type: "GET", 
+
+		  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
+
+		  }).done(function(data){ //Now clear the authentication header stored in the browser 
+			  
+			  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
+		  
+			  if (!document.execCommand("ClearAuthenticationCache")) { 
+			  } 
+		  }) 
+	},
+
+	
+	
+
+	handleSubIconTabBarSelect:function(evt){
+
 	}
 
 });

@@ -1,44 +1,27 @@
-<core:FragmentDefinition
-  xmlns="sap.m"
-  xmlns:core="sap.ui.core">
-    <ViewSettingsDialog
-    confirm="handleFilter">
-  
-    <filterItems 
-    		 >
-      <ViewSettingsFilterItem text="Status" key="HeaderStatus" items="{path: '/Status'}">
-<items>
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog confirm="handleFilter">
 
-   <ViewSettingsItem text="{HeaderStatus}" key="{HeaderStatus}" />
-   
-   
+		<filterItems>
+			<ViewSettingsFilterItem text="Status" key="HeaderStatus"
+				items="{path: '/Status'}">
+				<items>
+					<ViewSettingsItem text="{HeaderStatus}" key="{HeaderStatus}" />
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem text="PendingWith"
+				key="ApproverName" items="{path: '/PendingWith'}">
+				<items>
+					<ViewSettingsItem text="{ApproverName}" key="{ApproverName}" />
+				</items>
+			</ViewSettingsFilterItem>
 
-</items>
-</ViewSettingsFilterItem>
- <ViewSettingsFilterItem text="PendingWith" key="ApproverName" items="{path: '/PendingWith'}">
-<items>
-
-   <ViewSettingsItem text="{ApproverName}" key="{ApproverName}" />
-   </items>
-   </ViewSettingsFilterItem>
-   
-    <ViewSettingsFilterItem text="Exception" key="ExcepFlg" >
-<items>
-
-   <ViewSettingsItem text="With Exception" key="X" />
-   <ViewSettingsItem text="Without Exception" key="" />
-   </items>
-   </ViewSettingsFilterItem>
-      
-     <!--  <ViewSettingsCustomItem text="Exception" key="ExcepFlg">
-<customControl>
-<List id="switchList" headerText="">
-<InputListItem label="State">
-<Switch id="switch" state="true" /> 
-</InputListItem>
-</List>
-</customControl>
-</ViewSettingsCustomItem>   -->
-    </filterItems>
-  </ViewSettingsDialog>
+			<ViewSettingsFilterItem text="Exception" key="ExcepFlg">
+				<items>
+					<ViewSettingsItem text="With Exception" key="X" />
+					<ViewSettingsItem text="Without Exception" key="" />
+				</items>
+			</ViewSettingsFilterItem>
+	</filterItems>
+	</ViewSettingsDialog>
 </core:FragmentDefinition>

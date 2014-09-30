@@ -1,6 +1,13 @@
 <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
-		controllerName="com.sndk.poc.tracksalesorder.StatusItem" xmlns:html="http://www.w3.org/1999/xhtml">
+		controllerName="com.sndk.poc.tracksalesorder.StatusItem" >
 	<Page title="{i18n>StatusItemTitle}" showNavButton="true" navButtonPress="handleNavBack">
+	<headerContent>
+		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname}" press="onClick" />
+		</headerContent>
+	
+	
+	
+	
 		<content>
 			<IconTabBar id="idSubIconTabBar" select="handleSubIconTabBarSelect">
 						<items>
@@ -189,7 +196,7 @@
 										</Column>	
 										<Column hAlign="Center">
 											<header>
-												<Text text="Status" />
+												<Text text="RequestedDate" />
 											</header>
 										</Column>
 									</columns>
@@ -198,7 +205,7 @@
 											<Text text="{path:'SLine',formatter:'com.sndk.poc.util.Formatter.trail'}" />
 											<Text text="{Material}" />
 											<Text text="{Quantity}" />
-											<Text text="{Status}" />
+											<Text text="{ReqDelDate}" />
 										</cells>
 									</ColumnListItem>
 								</Table>
