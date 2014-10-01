@@ -224,14 +224,14 @@
 				<IconTabFilter icon="sap-icon://warning" iconColor="Negative"
 					id="exceptionid">
 					<Table id="exception" headerText="{i18n>LineItemTableException}"
-						items="{/results}">
+						items="{/results}" >
 						<columns>
-							<Column demandPopin="true" hAlign="Begin">
+							<Column demandPopin="true" hAlign="Begin" >
 								<header>
 									<Text text="Item No" />
 								</header>
 							</Column>
-							<Column minScreenWidth="Tablet" hAlign="Center">
+							<Column minScreenWidth="Tablet" hAlign="Center" >
 								<header>
 									<Text text="Product ID" />
 								</header>
@@ -241,7 +241,7 @@
 									<Text text="Requested Delivery Date" />
 								</header>
 							</Column>
-							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" >
 								<header>
 									<Text text="Quantity" />
 								</header>
@@ -251,12 +251,12 @@
 									<Text text="Status" />
 								</header>
 							</Column>
-							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" >
 								<header>
 									<Text text="Planned Ship Date" />
 								</header>
 							</Column>
-							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="7em">
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="8em">
 								<header>
 									<Text text="Exception Types" />
 								</header>
