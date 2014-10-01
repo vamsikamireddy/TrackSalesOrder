@@ -73,5 +73,7 @@ com.sndk.poc.util.Formatter = {
 	trail : function(value) {
 		return parseInt(value);
 	},
+	
+	
 
 };

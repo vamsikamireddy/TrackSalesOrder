@@ -365,6 +365,10 @@ sap.ui
 
 						
 						obj.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+						if(jQuery.device.is.phone){
+							obj.byId("header").setText("");
+						}
+						
 
 						var gtsts = this.byId("IconTabBar").getSelectedKey();
 
@@ -413,6 +417,19 @@ sap.ui
 						}
 
 					},
+					
+					handleLoginDetails:function(evt){
+						this._actionSheet.close();
+						if (! this._oDialog) {
+						      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
+						    }
+						this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
+					    this._oDialog.open();	
+					},
+					
+					onDialogCloseButton: function (oEvent) {
+					    this._oDialog.close();
+					  },
 					
 					handleLogoutButton : function(oEvent) {
 						 

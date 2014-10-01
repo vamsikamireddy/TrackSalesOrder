@@ -7,7 +7,8 @@
     showCancelButton="true"
     placement="Bottom">
     <buttons>
-      <Button text="LogOut" icon="sap-icon://log" press="handleLogoutButton"/>
+      <Button text="LoginDetails" icon="sap-icon://person-placeholder" press="handleLoginDetails" />
+       <Button text="LogOut" icon="sap-icon://log" press="handleLogoutButton"/>
     </buttons>
   </ActionSheet>
 </core:FragmentDefinition>

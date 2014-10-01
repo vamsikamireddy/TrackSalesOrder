@@ -2,7 +2,7 @@
 		controllerName="com.sndk.poc.tracksalesorder.StatusItem" >
 	<Page title="{i18n>StatusItemTitle}" showNavButton="true" navButtonPress="handleNavBack">
 	<headerContent>
-		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname}" press="onClick" />
+		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname} {/Lastname}" press="onClick"/>
 		</headerContent>
 	
 	

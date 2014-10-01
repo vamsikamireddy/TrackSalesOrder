@@ -18,6 +18,9 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 		this.byId("itmtable").setModel(itemModel);
 		this.byId("idSubIconTabBar").setSelectedKey(key);
 		this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+		if(jQuery.device.is.phone){
+			this.byId("header").setText("");
+		}
 	
 	},
 	
@@ -35,6 +38,9 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 			this.byId("idSubIconTabBar").setSelectedKey(key);
 		}
 		this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+		if(jQuery.device.is.phone){
+			this.byId("header").setText("");
+		}
 	},
 	
 	handleStatusLineItemPress:function(evt){
@@ -79,6 +85,18 @@ sap.ui.controller("com.sndk.poc.tracksalesorder.StatusItem", {
 			this._actionSheet.openBy(oButton);
 	  },
 
+		handleLoginDetails:function(evt){
+			this._actionSheet.close();
+			if (! this._oDialog) {
+			      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
+			    }
+			this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
+		    this._oDialog.open();	
+		},
+		
+		onDialogCloseButton: function (oEvent) {
+		    this._oDialog.close();
+		  },
 	  handleLogoutButton : function(oEvent) {
 			 
 		  this._actionSheet.close();

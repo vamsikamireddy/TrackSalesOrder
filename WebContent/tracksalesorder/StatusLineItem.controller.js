@@ -15,15 +15,21 @@ onBeforeRendering : function(){
 	this.getView().setModel(itemModel) ;
 	
 	if(modelPath.indexOf("Shipped") < 0){
-		this.byId("shipDate").setText("");
-		this.byId("shipDateTxt").setText("");
-		this.byId("trackingNo").setText("");
-		this.byId("trackingNoTxt").setText("");
+		this.byId("shipDate").setVisible(false);
+		this.byId("shipDateTxt").setVisible(false);
+		this.byId("trackingNo").setVisible(false);
+		this.byId("trackingNoTxt").setVisible(false);
 	}else{
-		this.byId("shipDate").setText("ActualShip Date");
-		this.byId("trackingNo").setText("Tracking No");
+		this.byId("shipDate").setVisible(true);
+		this.byId("shipDateTxt").setVisible(true);
+		this.byId("trackingNo").setVisible(true);
+		this.byId("trackingNoTxt").setVisible(true);
 	}
+
 	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+	if(jQuery.device.is.phone){
+		this.byId("header").setText("");
+	}
 	
 },
 
@@ -35,17 +41,34 @@ handleNavigation : function(evt){
 	var itemModel = sap.ui.getCore().getModel(modelName);
 	this.getView().setModel(itemModel) ;
 	if(modelPath.indexOf("Shipped") < 0){
-		this.byId("shipDate").setText("");
-		this.byId("shipDateTxt").setText("");
-		this.byId("trackingNo").setText("");
-		this.byId("trackingNoTxt").setText("");
+		this.byId("shipDate").setVisible(false);
+		this.byId("shipDateTxt").setVisible(false);
+		this.byId("trackingNo").setVisible(false);
+		this.byId("trackingNoTxt").setVisible(false);
 	}else{
-		this.byId("shipDate").setText("ActualShip Date");
-		this.byId("trackingNo").setText("Tracking No");
+		this.byId("shipDate").setVisible(true);
+		this.byId("shipDateTxt").setVisible(true);
+		this.byId("trackingNo").setVisible(true);
+		this.byId("trackingNoTxt").setVisible(true);
 	}
 	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+	if(jQuery.device.is.phone){
+		this.byId("header").setText("");
+	}
 },
 
+handleLoginDetails:function(evt){
+	this._actionSheet.close();
+	if (! this._oDialog) {
+	      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
+	    }
+	this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
+    this._oDialog.open();	
+},
+
+onDialogCloseButton: function (oEvent) {
+    this._oDialog.close();
+  },
 handleLogoutButton : function(oEvent) {
 	 
 	  this._actionSheet.close();

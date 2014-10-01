@@ -14,6 +14,7 @@
 
 		}
 
+										
 		
 	.sapMOHNumber{
           font-size : 20px;
@@ -23,7 +24,8 @@
 	<Page title="{i18n>DetailTitle}" showNavButton="{device>/isPhone}"
 		navButtonPress="handleNavButtonPress" showHeader="true">
 		<headerContent>
-		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname}" press="onClick"/>
+		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname}{/Lastname}"   press="onClick" />
+		
 		</headerContent>
 
 		<ObjectHeader id = "statusText"   title="{SOrd}">
@@ -95,7 +97,7 @@
 										<Text text="Stage" />
 									</header>
 								</Column>
-								<Column hAlign="Center" demandPopin="true" minScreenWidth="Desktop">
+								<Column hAlign="Center" demandPopin="true" minScreenWidth="Tablet" width="9em">
 									<header>
 										<Text text="Person" />
 									</header>
@@ -128,7 +130,8 @@
 							<ColumnListItem type="Inactive">
 								<cells>
 									<ObjectIdentifier title="{Stage}" />
-									<Link class="onhyperlink" text="{Approver}" press="handleLinkPress" />
+									
+									 <Link class="onhyperlink" text="{Approver}" press="handleLinkPress" />
 									
 									<Text
 										text="{path:'RejDate',	formatter:'com.sndk.poc.util.Formatter.date'	}" />
@@ -253,7 +256,7 @@
 									<Text text="Planned Ship Date" />
 								</header>
 							</Column>
-							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center">
+							<Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center" width="7em">
 								<header>
 									<Text text="Exception Types" />
 								</header>

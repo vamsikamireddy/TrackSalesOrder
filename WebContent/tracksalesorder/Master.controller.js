@@ -103,6 +103,10 @@ sap.ui
 						});
 						var list = this.getView().byId("list");
 						var binding = list.getBinding("items").filter(aFilters);
+						this.getView().byId("list").removeSelections();
+						if(!jQuery.device.is.phone){
+							this.nav.to("Empty");
+						}
 					},
 
 					handleSorting : function(evt){
@@ -134,6 +138,7 @@ sap.ui
 								            		  )
 								             ]
 								);
+						
 					},
 					
 					handleLiveChange:function(evt){
@@ -264,6 +269,10 @@ sap.ui
 							_BusyDialog.close(); 
 							dataModel.setData(data);
 							sap.ui.getCore().setModel(dataModel,"myModel");
+							if(!jQuery.device.is.phone){
+								obj.nav.to("Empty");
+							}
+							
 						 
 						},
 						function(err)
@@ -333,6 +342,32 @@ sap.ui
 							
 
 						oDataModel = new sap.ui.model.odata.ODataModel(url);
+						if(jQuery.device.is.phone){
+						var nameModel = new  sap.ui.model.json.JSONModel();
+						oDataModel = new sap.ui.model.odata.ODataModel(url);
+						if(oDataModel!=null){
+							var nquery = "GetName('X')" ;
+							oDataModel.read(nquery,null,[],true,
+							function(data){
+								nameModel.setData(data);
+								sap.ui.getCore().setModel(nameModel, "nameModel");
+								
+								
+							},
+							function(err){
+								var msg =  err.response.statusText;
+								sap.m.MessageBox.show( 
+									     msg,
+									      sap.m.MessageBox.Icon.ERROR,
+									      err.message,
+									      [sap.m.MessageBox.Action.OK],
+									      function() { / * do something * / }
+										 );
+								
+							}
+							);
+						}
+						}
 
 						if (oDataModel != null) {
 							var query = "GetOrders?$filter=FromDate eq datetime'"
@@ -402,6 +437,9 @@ sap.ui
 							});
 
 						}
+						
+						
+						
 
 					}
 

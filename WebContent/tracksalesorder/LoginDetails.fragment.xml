@@ -1,0 +1,32 @@
+<!-- Created (By: Sujeet) -->
+
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+
+
+ 
+	
+	
+  <Dialog
+    title="LoginDetails">
+ <f:SimpleForm  minWidth="1024" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1" columnsL="1" columnsM="1">
+ <f:content>
+ 
+  
+  
+    <Label text = "UserName"></Label>
+    <Text  text = "{/Firstname} {/Lastname}"></Text>
+     <Label text = "UserID"></Label>
+     <Text  text = "  {/Username}"></Text>
+   
+  </f:content>
+  </f:SimpleForm>
+     <beginButton>
+      <Button text="Ok" dialogType="Std" press="onDialogCloseButton" />
+    </beginButton> 
+    
+    
+  </Dialog>
+
+
+</core:FragmentDefinition>
