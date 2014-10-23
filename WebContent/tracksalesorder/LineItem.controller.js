@@ -23,10 +23,10 @@ onBeforeRendering : function(evt){
 		this.byId("trackingNoTxt").setVisible(false);
 
 	}
-	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
-	if(jQuery.device.is.phone){
-		this.byId("header").setText("");
-	}
+//	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+//	if(jQuery.device.is.phone){
+//		this.byId("header").setText("");
+//	}
 
 },
 
@@ -50,42 +50,42 @@ handleItemPress:function(evt){
 
 	}
 
-	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
-	if(jQuery.device.is.phone){
-		this.byId("header").setText("");
-	}
+//	this.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+//	if(jQuery.device.is.phone){
+//		this.byId("header").setText("");
+//	}
 },
 
-handleLoginDetails:function(evt){
-	this._actionSheet.close();
-	if (! this._oDialog) {
-	      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
-	    }
-	this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
-    this._oDialog.open();	
-},
-
-onDialogCloseButton: function (oEvent) {
-    this._oDialog.close();
-  },
-
-handleLogoutButton : function(oEvent) {
-	 
-	  this._actionSheet.close();
-	  $.ajax({ 
-	  type: "GET", 
-
-	  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
-
-	  }).done(function(data){ //Now clear the authentication header stored in the browser 
-		  
-		  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
-	  
-		  if (!document.execCommand("ClearAuthenticationCache")) { 
-		  } 
-
-	  }) 
-},
+//handleLoginDetails:function(evt){
+//	this._actionSheet.close();
+//	if (! this._oDialog) {
+//	      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
+//	    }
+//	this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
+//    this._oDialog.open();	
+//},
+//
+//onDialogCloseButton: function (oEvent) {
+//    this._oDialog.close();
+//  },
+//
+//handleLogoutButton : function(oEvent) {
+//	 
+//	  this._actionSheet.close();
+//	  $.ajax({ 
+//	  type: "GET", 
+//
+//	  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
+//
+//	  }).done(function(data){ //Now clear the authentication header stored in the browser 
+//		  
+//		  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
+//	  
+//		  if (!document.execCommand("ClearAuthenticationCache")) { 
+//		  } 
+//
+//	  }) 
+//},
 
 					onClick : function(evt) {
 

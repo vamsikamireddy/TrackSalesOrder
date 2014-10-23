@@ -3,9 +3,9 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core" >
 	<Page>
-	<headerContent>
+	<!--  <headerContent>
 		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname} {/Lastname}" press="onClick"/>
-		</headerContent>
+		</headerContent>-->
 	
 	</Page>
 </core:View>

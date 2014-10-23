@@ -12,7 +12,7 @@ sap.ui
 					
 					
 		handleListItemPress : function(evt) {
-
+			alert("url" + window.document.URL.toString()); 
 			var context = evt.getSource().getBindingContext();
 			if (context != null) {
 						
@@ -37,7 +37,7 @@ sap.ui
 		}	,		
 					
 		handleListSelect : function(evt) {
-
+			alert("url" + window.document.URL.toString()); 
 
 			var context = evt.getParameter("listItem").getBindingContext();
 				if (context != null) {
@@ -248,8 +248,8 @@ sap.ui
 						   endDate = dateFormat.format(endDate) + "T00:00:00";
 						   
 						
-						 
-						    var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/"; 
+						   	var url = "/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						    //var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/"; 
 
 
 						   var dataModel = sap.ui.getCore().getModel("myModel");
@@ -302,6 +302,8 @@ sap.ui
 					},
 
 					onBeforeRendering : function() {
+					alert("url" + window.document.URL.toString()); 
+						alert("url sord" + getURLParameters("SORD"));
 						var busyDialog;
 						if (!this._BusyDialog) {
 							this._BusyDialog = new sap.m.BusyDialog("BusyIndicator",   
@@ -334,7 +336,8 @@ sap.ui
 
 
 						var detailModel = sap.ui.getCore().getModel("myModel");
-						var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						var url = "/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						//var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
 
 						var obj = this;
 						var statusList = [];
@@ -342,32 +345,32 @@ sap.ui
 							
 
 						oDataModel = new sap.ui.model.odata.ODataModel(url);
-						if(jQuery.device.is.phone){
-						var nameModel = new  sap.ui.model.json.JSONModel();
-						oDataModel = new sap.ui.model.odata.ODataModel(url);
-						if(oDataModel!=null){
-							var nquery = "GetName('X')" ;
-							oDataModel.read(nquery,null,[],true,
-							function(data){
-								nameModel.setData(data);
-								sap.ui.getCore().setModel(nameModel, "nameModel");
-								
-								
-							},
-							function(err){
-								var msg =  err.response.statusText;
-								sap.m.MessageBox.show( 
-									     msg,
-									      sap.m.MessageBox.Icon.ERROR,
-									      err.message,
-									      [sap.m.MessageBox.Action.OK],
-									      function() { / * do something * / }
-										 );
-								
-							}
-							);
-						}
-						}
+//						if(jQuery.device.is.phone){
+//						var nameModel = new  sap.ui.model.json.JSONModel();
+//						oDataModel = new sap.ui.model.odata.ODataModel(url);
+//						if(oDataModel!=null){
+//							var nquery = "GetName('X')" ;
+//							oDataModel.read(nquery,null,[],true,
+//							function(data){
+//								nameModel.setData(data);
+//								sap.ui.getCore().setModel(nameModel, "nameModel");
+//								
+//								
+//							},
+//							function(err){
+//								var msg =  err.response.statusText;
+//								sap.m.MessageBox.show( 
+//									     msg,
+//									      sap.m.MessageBox.Icon.ERROR,
+//									      err.message,
+//									      [sap.m.MessageBox.Action.OK],
+//									      function() { / * do something * / }
+//										 );
+//								
+//							}
+//							);
+//						}
+//						}
 
 						if (oDataModel != null) {
 							var query = "GetOrders?$filter=FromDate eq datetime'"
@@ -444,6 +447,37 @@ sap.ui
 					}
 
 				});
+				function getURLParameters(paramName) 
+{
+        var sURL = window.document.URL.toString();  
+    if (sURL.indexOf("?") > 0)
+    {
+       var arrParams = sURL.split("?");         
+       var arrURLParams = arrParams[1].split("&");      
+       var arrParamNames = new Array(arrURLParams.length);
+       var arrParamValues = new Array(arrURLParams.length);     
+       var i = 0;
+       for (i=0;i<arrURLParams.length;i++)
+       {
+        var sParam =  arrURLParams[i].split("=");
+        arrParamNames[i] = sParam[0];
+        if (sParam[1] != "")
+            arrParamValues[i] = unescape(sParam[1]);
+        else
+            arrParamValues[i] = "No Value";
+       }
+
+       for (i=0;i<arrURLParams.length;i++)
+       {
+                if(arrParamNames[i] == paramName){
+            //alert("Param:"+arrParamValues[i]);
+                return arrParamValues[i];
+             }
+       }
+       return "No Parameters Found";
+    }
+
+}
 function findDuplicate(arrayOfObjects,objectToFind, fieldToCheck )
 { 
 	var isDuplicate = false;

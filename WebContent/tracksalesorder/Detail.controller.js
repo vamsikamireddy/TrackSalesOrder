@@ -1,6 +1,9 @@
 jQuery.sap.require("com.sndk.poc.util.Formatter");
 jQuery.sap.require("sap.m.MessageBox");
 jQuery.sap.require("sap.m.MessageToast");
+jQuery.sap.require("sap.ca.scfld.md.controller.BaseDetailController");
+jQuery.sap.require("sap.ushell.services.Bookmark");
+jQuery.sap.require("sap.ushell.services.Container");
 
 sap.ui
 		.controller(
@@ -28,7 +31,8 @@ sap.ui
 							}
 						}
 						var idModel = new sap.ui.model.json.JSONModel();
-						var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						var url = "/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						//var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
 						var obj = this;
 						var oDataModel = new sap.ui.model.odata.ODataModel(url);
 						if (oDataModel != null) {
@@ -95,17 +99,19 @@ sap.ui
 								[ sap.m.MessageBox.Action.OK ]);
 					},
 					
-					onClick : function(evt){
-						var oButton = evt.getSource();
-						if (!this._actionSheet) {
-							      this._actionSheet = sap.ui.xmlfragment(
-							        "com.sndk.poc.tracksalesorder.LogPopover",
-							        this
-							      );
-							    }
-
-							this._actionSheet.openBy(oButton);
-					  },
+//					onClick : function(evt){
+//						var oButton = evt.getSource();
+//						if (!this._actionSheet) {
+//							      this._actionSheet = sap.ui.xmlfragment(
+//							        "com.sndk.poc.tracksalesorder.LogPopover",
+//							        this
+//							      );
+//							    }
+//
+//							this._actionSheet.openBy(oButton);
+//					  },
+					
+					 
 
 					handleLineItemPress : function(evt) {
 						var context = evt.getSource().getBindingContext();
@@ -189,7 +195,8 @@ sap.ui
 						// Begin of Approval History Tab
 
 						var apprvlModel = new sap.ui.model.json.JSONModel();
-						var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						var url = "/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
+						//var url = "http://milsapidv21.sandisk.com:8032/sap/opu/odata/sap/Z_SNDK_ORDERTRACK_SRV/";
 						var obj = this;
 						var oDataModel = new sap.ui.model.odata.ODataModel(url);
 						if (oDataModel != null) {
@@ -364,10 +371,10 @@ sap.ui
 						
 
 						
-						obj.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
-						if(jQuery.device.is.phone){
-							obj.byId("header").setText("");
-						}
+//						obj.byId("header").setModel(sap.ui.getCore().getModel("nameModel"));
+//						if(jQuery.device.is.phone){
+//							obj.byId("header").setText("");
+//						}
 						
 
 						var gtsts = this.byId("IconTabBar").getSelectedKey();
@@ -418,38 +425,135 @@ sap.ui
 
 					},
 					
-					handleLoginDetails:function(evt){
-						this._actionSheet.close();
-						if (! this._oDialog) {
-						      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
-						    }
-						this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
-					    this._oDialog.open();	
+					handleBookmarkAction:function(evt){
+
+						
+						var tileSheet = evt.getSource();
+						if (!this._actionSheet) {
+							      this._actionSheet = sap.ui.xmlfragment(
+							        "com.sndk.poc.tracksalesorder.SaveTile",
+							        this
+							      );
+							    }
+
+							this._actionSheet.openBy(tileSheet);
+						
+						
+						
 					},
 					
-					onDialogCloseButton: function (oEvent) {
-					    this._oDialog.close();
-					  },
-					
-					handleLogoutButton : function(oEvent) {
-						 
+					handleSaveTile:function(evt){
 						this._actionSheet.close();
-						  $.ajax({ 
-
-						  type: "GET", 
-
-						  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
-
-						  }).done(function(data){ //Now clear the authentication header stored in the browser 
-							  
-							  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
-						  
-							  if (!document.execCommand("ClearAuthenticationCache")) { 
-							  } 
-
-						  }) 
-					}
+						if (! this._tileDialog) {
+						      this._tileDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.TileDialog", this);
+						    }
+						
 					
+						this._tileDialog.open();
+					},
+					
+						handleOkPress:function(){
+							
+							this._tileDialog.close();
+							var url = window.location.href;
+							var titleTxt = sap.ui.getCore().byId("title").getValue();
+							var subtitleTxt = sap.ui.getCore().byId("subtitle").getValue();
+							var infoTxt = sap.ui.getCore().byId("info").getValue();
+							var serviceUrl = "/sap/opu/odata/UI2/PAGE_BUILDER_PERS/";
+						///	var serviceUrl = "http://milsapcs1.sandisk.com:8000/sap/opu/odata/UI2/PAGE_BUILDER_PERS/";
+	
+							var oDataModel = new sap.ui.model.odata.ODataModel(serviceUrl);
+							if (oDataModel != null ) {
+	
+								
+								var payload =  {chipId : "X-SAP-UI2-CHIP:/UI2/STATIC_APPLAUNCHER",
+										configuration:"{\"tileConfiguration\":\"{\\\"display_icon_url\\\":\\\"sap-icon://sales-order\\\",\\\"display_info_text\\\":\\\""+ infoTxt +"\\\",\\\"display_subtitle_text\\\":\\\""+subtitleTxt+"\\\",\\\"display_title_text\\\":\\\""+ titleTxt +"\\\",\\\"navigation_target_url\\\":\\\"#TrackOrder-display\\\",\\\"navigation_use_semantic_object\\\":false}\"}",
+										instanceId:"",
+										layoutData : "",
+										pageId: "/UI2/Fiori2LaunchpadHome",
+										title : titleTxt};
+								 oDataModel.create(
+												"PageChipInstances",payload,										
+												null,
+												function functionfnSuccess(s,response)
+	
+												{
+													
+													sap.m.MessageToast.show("Tile Created Successfully", {
+
+										                  duration: 5000,                  // default
+
+										                  width: "20em",                   // default
+
+										                  my: "center bottom",             // default
+
+										                  at: "center bottom",             // default
+
+										                
+										               
+
+										              });
+												//alert("Success");
+															
+	
+												},
+												function fnError(e) {
+													
+													sap.m.MessageBox.show(
+															e.response.statusText,
+														      sap.m.MessageBox.Icon.ERROR,
+														      e.message,
+														      [sap.m.MessageBox.Action.OK],
+														      function() { / * do something * / }
+															 );
+													
+												});
+							}
+						},
+					
+					handleCancelPress:function(){
+						this._tileDialog.close();
+					},
+					
+					
+
+					
+
+					
+
+					
+//					handleLoginDetails:function(evt){
+//						this._actionSheet.close();
+//						if (! this._oDialog) {
+//						      this._oDialog = sap.ui.xmlfragment("com.sndk.poc.tracksalesorder.LoginDetails", this);
+//						    }
+//						this._oDialog.setModel(sap.ui.getCore().getModel("nameModel"));
+//					    this._oDialog.open();	
+//					},
+//					
+//					onDialogCloseButton: function (oEvent) {
+//					    this._oDialog.close();
+//					  },
+//					
+//					handleLogoutButton : function(oEvent) {
+//						 
+//						this._actionSheet.close();
+//						  $.ajax({ 
+//
+//						  type: "GET", 
+//
+//						  url: "http://milsapidv21.sandisk.com:8032/sap/public/bc/icf/logoff"//Clear SSO cookies: SAP Provided service to do that 
+//
+//						  }).done(function(data){ //Now clear the authentication header stored in the browser 
+//							  
+//							  sap.m.URLHelper.redirect("http://milsapidv21.sandisk.com:8032/sap/bc/ui5_ui5/sap/zcrm_trackorder/index.html?sap-client=100", false);
+//						  
+//							  if (!document.execCommand("ClearAuthenticationCache")) { 
+//							  } 
+//
+//						  }) 
+//					}
+//					
 
 
 

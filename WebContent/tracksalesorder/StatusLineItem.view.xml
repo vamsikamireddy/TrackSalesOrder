@@ -4,9 +4,9 @@
 	>
 	<Page id="page" title="{i18n>LineItemTitle}" showNavButton="true"
 		navButtonPress="handleNavBack">
-		<headerContent>
+		<!--  <headerContent>
 		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname} {/Lastname}" press="onClick"/>
-		</headerContent>
+		</headerContent>-->
 	
 	
 		
