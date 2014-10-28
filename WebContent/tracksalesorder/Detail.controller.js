@@ -453,9 +453,17 @@ sap.ui
 					},
 					
 						handleOkPress:function(){
+							var myModel = sap.ui.getCore().getModel("indexModel");
+							var index = myModel.getProperty("/index");
+							 
+							var myModel = sap.ui.getCore().getModel("myModel");
+							var check = myModel.getProperty("/results");
+							var dte = check[index].SubDate;
 							
 							this._tileDialog.close();
-							var url = window.location.href;
+
+							var targetUrl ="#TrackOrder-display?SORD=" + this.byId("statusText").getTitle() + "&DATE=" + dte;
+
 							var titleTxt = sap.ui.getCore().byId("title").getValue();
 							var subtitleTxt = sap.ui.getCore().byId("subtitle").getValue();
 							var infoTxt = sap.ui.getCore().byId("info").getValue();
@@ -467,7 +475,7 @@ sap.ui
 	
 								
 								var payload =  {chipId : "X-SAP-UI2-CHIP:/UI2/STATIC_APPLAUNCHER",
-										configuration:"{\"tileConfiguration\":\"{\\\"display_icon_url\\\":\\\"sap-icon://sales-order\\\",\\\"display_info_text\\\":\\\""+ infoTxt +"\\\",\\\"display_subtitle_text\\\":\\\""+subtitleTxt+"\\\",\\\"display_title_text\\\":\\\""+ titleTxt +"\\\",\\\"navigation_target_url\\\":\\\"#TrackOrder-display\\\",\\\"navigation_use_semantic_object\\\":false}\"}",
+										configuration:"{\"tileConfiguration\":\"{\\\"display_icon_url\\\":\\\"sap-icon://sales-order\\\",\\\"display_info_text\\\":\\\""+ infoTxt +"\\\",\\\"display_subtitle_text\\\":\\\""+subtitleTxt+"\\\",\\\"display_title_text\\\":\\\""+ titleTxt +"\\\",\\\"navigation_target_url\\\":\\\"" +targetUrl + "\\\",\\\"navigation_use_semantic_object\\\":false}\"}",
 										instanceId:"",
 										layoutData : "",
 										pageId: "/UI2/Fiori2LaunchpadHome",

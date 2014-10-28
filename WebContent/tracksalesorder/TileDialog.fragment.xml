@@ -1,0 +1,49 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	 >
+	 img.center {
+  display: inline;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}
+	 
+	  <Dialog
+    title="Save As Tile"
+   
+   >
+  <content>
+   <VBox fitContainer="true" justifyContent="Center" alignItems="Center">	
+  <Image src="icons/AppIcon.png" />
+  </VBox>
+  </content>
+   <f:SimpleForm  minWidth="1024" maxContainerCols="1" editable="false" layout="ResponsiveGridLayout" title="" labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1" columnsL="1" columnsM="1">
+ 
+ 
+   <f:content>
+  
+	
+    			<Label text="Title" />
+				<Input id="title"  type="Text"	placeholder=""  />
+				<Label text="Subtitle" /> 
+				<Input id="subtitle"  type="Text"	placeholder=""   />
+				<Label text="Info" />
+				<Input id="info"  type="Text"	placeholder=""   />
+				
+</f:content>
+</f:SimpleForm>	
+		
+	
+	<beginButton>
+		<Button  text="OK" dialogType="Std" press="handleOkPress"/>
+	</beginButton>
+	<endButton>
+		<Button  text="Cancel" press="handleCancelPress"/>
+	</endButton>
+</Dialog>
+	
+
+	
+</core:FragmentDefinition>
+

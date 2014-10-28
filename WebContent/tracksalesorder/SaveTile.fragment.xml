@@ -1,0 +1,14 @@
+<!-- Created (By: Vamsi) -->
+
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core"  >
+	<ActionSheet
+    title=""
+    showCancelButton="true"
+    placement="Top">
+    <buttons>
+      <Button text="Save As Tile" icon="sap-icon://favorite" press="handleSaveTile" />
+       
+    </buttons>
+  </ActionSheet>
+</core:FragmentDefinition>

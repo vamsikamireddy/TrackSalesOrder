@@ -12,7 +12,7 @@ sap.ui
 					
 					
 		handleListItemPress : function(evt) {
-			alert("url" + window.document.URL.toString()); 
+			
 			var context = evt.getSource().getBindingContext();
 			if (context != null) {
 						
@@ -37,7 +37,7 @@ sap.ui
 		}	,		
 					
 		handleListSelect : function(evt) {
-			alert("url" + window.document.URL.toString()); 
+	
 
 			var context = evt.getParameter("listItem").getBindingContext();
 				if (context != null) {
@@ -302,9 +302,13 @@ sap.ui
 					},
 
 					onBeforeRendering : function() {
-					alert("url" + window.document.URL.toString()); 
-						alert("url sord" + getURLParameters("SORD"));
+				
+//						alert("Date" + getURLParameters("DATE"));
+//						alert("Sord " + getURLParameters("SORD"));
+						var fromdate;
+						var todate;
 						var busyDialog;
+						var context;
 						if (!this._BusyDialog) {
 							this._BusyDialog = new sap.m.BusyDialog("BusyIndicator",   
 			                {  
@@ -318,19 +322,27 @@ sap.ui
 						busyDialog = this._BusyDialog;
 						
 						this._BusyDialog.open();
-						var currentdate = new Date(); 		
-						var todate = currentdate.getFullYear() + "-"  
-										      + (currentdate.getMonth()+1) + "-"	
-										      + currentdate.getDate() + "T00:00:00";
+						var subDate = getURLParameters("DATE");
+						if (subDate) {
+							fromdate = subDate;
+							todate = subDate;
+						} else {
+							var currentdate = new Date();
+							var todate = currentdate.getFullYear() + "-"
+									+ (currentdate.getMonth() + 1) + "-"
+									+ currentdate.getDate() + "T00:00:00";
+
+							// get the date and time prior to three months from
+							// today
+							var d = new Date();
+							var t = (d.getMonth() - 1) + 1;
+
+							var fromdate = currentdate.getFullYear() + "-" + t
+									+ "-" + currentdate.getDate() + "T00:00:00";
+
+						}
 
 						
-				//get the date and time prior to three months from today
-						var d = new Date(); 
-						var t = (d.getMonth()-1)+1; 
-						
-						var fromdate = currentdate.getFullYear() + "-"  
-						 + t + "-"	
-						 + currentdate.getDate() + "T00:00:00";
 
 						
 
@@ -419,11 +431,53 @@ sap.ui
 											"PendingWith" : pendingWith,
 										});
 										sap.ui.getCore().setModel(jsonModel,"filterModel");
+										
+										var sord = getURLParameters("SORD");
+										if(sord){
+									
+									if(objects instanceof Array){
+									
+											for(var j=0;j<objects.length;j++){
+													if(objects[j].SOrd == sord){
+														var items = obj.byId("list").getItems();
+														if(jQuery.device.is.phone){
+															context =  items[j].getBindingContext();
+														}else{
+															obj.byId("list").setSelectedItem(items[j],true);
+															context = obj.byId("list").getSelectedItem().getBindingContext();
+																
+														}
+														
+														
+														if (context)  {
+															
+															var place = context.toString();
+															place = place.substring(place.lastIndexOf("/") + 1);
+															var indexModel = new sap.ui.model.json.JSONModel();
+															sap.ui.getCore().setModel(indexModel, "indexModel");
+															indexModel.setData({
+																index : "",
+															});
+															indexModel.setProperty("/index", place);
+															var app = obj.getView().app;
+															if (app)
+																var page = app.getPage("Detail");
+															if (page) {
+																page.oController.checkStatus();
+															}
+															obj.nav.to("Detail", context);
+															break;
+													}
+														
+														}
+
+													}
+											}
 									}
 									
 									
 
-
+									}
 
 
 
@@ -470,14 +524,14 @@ sap.ui
        for (i=0;i<arrURLParams.length;i++)
        {
                 if(arrParamNames[i] == paramName){
-            //alert("Param:"+arrParamValues[i]);
-                return arrParamValues[i];
+                	return arrParamValues[i];
              }
        }
-       return "No Parameters Found";
+       return null;
     }
 
 }
+			
 function findDuplicate(arrayOfObjects,objectToFind, fieldToCheck )
 { 
 	var isDuplicate = false;
