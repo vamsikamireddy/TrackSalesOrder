@@ -1,9 +1,7 @@
 <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
 		controllerName="com.sndk.poc.tracksalesorder.StatusItem" >
 	<Page title="{i18n>StatusItemTitle}" showNavButton="true" navButtonPress="handleNavBack">
-	<!--  <headerContent>
-		<Button id= "header" icon = "sap-icon://customer-and-contacts" text="{/Firstname} {/Lastname}" press="onClick"/>
-		</headerContent>-->
+	
 	
 	
 	
